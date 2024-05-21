@@ -4,7 +4,8 @@ import os
 import subprocess
 import re
 import sys
-#from main_pentest import main_dir
+import netifaces as ni
+import ipaddress
 
 # Le premier argument est le nom du script, donc nous prenons le deuxième
 main_dir = sys.argv[1]
@@ -19,10 +20,19 @@ if not os.path.exists(nmap_dir):
 else:
     print(f"Le dossier {nmap_dir} existe déjà.")
 
+# Récupérer l'adresse IP et le masque réseau
+ni.ifaddresses('eth0')  # Remplacer 'eth0' par le nom de votre interface réseau
+ip = ni.ifaddresses('eth0')[ni.AF_INET][0]['addr']
+netmask = ni.ifaddresses('eth0')[ni.AF_INET][0]['netmask']
+
+# Convertir l'adresse IP et le masque réseau en format CIDR
+network = ipaddress.IPv4Network(ip + '/' + netmask, strict=False)
+cidr = str(network.network_address) + '/' + str(network.prefixlen)
+
 print("Execution de nmap")
 try:
     # Exécuter la commande nmap
-    nmap_output = subprocess.check_output(["nmap", "-sV", "10.17.8.0/24"]).decode()
+    nmap_output = subprocess.check_output(["nmap", "-sV", str(cidr)]).decode()
     print("La commande nmap s'est exécutée avec succès.")
 except subprocess.CalledProcessError as e:
     print(f"La commande nmap a échoué avec l'erreur : {e}")
