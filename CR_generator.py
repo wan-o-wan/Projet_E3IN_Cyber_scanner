@@ -13,6 +13,14 @@ os.makedirs(cr_dir, exist_ok=True)
 
 # Ouvrir le fichier final pour l'écriture
 with open(os.path.join(cr_dir, "CR_final.txt"), 'w') as final_file:
+    # Chercher le fichier conf_reseau.txt dans le sous-dossier network_info en premier
+    network_info_dir = os.path.join("/Pentest", main_dir, "network_info")
+    network_info_file = os.path.join(network_info_dir, "conf_reseau.txt")
+    if os.path.isfile(network_info_file):
+        final_file.write(f"--- network_info ---\n")
+        with open(network_info_file, 'r') as network_info:
+            final_file.write(network_info.read())
+        final_file.write("\n\n")
     # Chercher le fichier compte_rendu.txt dans le sous-dossier nmap en premier
     nmap_dir = os.path.join(main_dir, "nmap")
     nmap_file = os.path.join(nmap_dir, "compte_rendu.txt")
@@ -25,7 +33,7 @@ with open(os.path.join(cr_dir, "CR_final.txt"), 'w') as final_file:
     # Parcourir tous les autres fichiers compte_rendu.txt dans les sous-dossiers de main_dir
     last_dir = None
     for root, dirs, files in os.walk(main_dir):
-        if root == nmap_dir:  # On a déjà traité le sous-dossier nmap
+        if root == nmap_dir or root == network_info_dir:  # On a déjà traité le sous-dossier nmap et network_info
             continue
         for file in files:
             if file == "compte_rendu.txt":

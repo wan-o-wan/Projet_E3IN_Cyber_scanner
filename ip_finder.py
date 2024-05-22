@@ -1,7 +1,11 @@
 import os
+import sys
 import socket
 import subprocess
-import time
+#import time
+
+# Le premier argument est le nom du script, donc nous prenons le deuxième
+main_dir = sys.argv[1]
 
 def check_dhcp():
     try:
@@ -40,7 +44,7 @@ def set_ip(ip):
         os.system("ip link set ens192 up")
         os.system("ip addr flush dev ens192")
         os.system("ip addr add " + ip + "/24 dev ens192")
-        time.sleep(5)
+       #time.sleep(5)
     except Exception as e:
         print("Failed to set IP: " + str(e))
 
@@ -73,6 +77,15 @@ def check_networks():
             #    return ip
     return None
 
+def write_network_info(ip, gateway_ip):
+    network_info_dir = "/Pentest/" + main_dir + "/network_info"
+    os.makedirs(network_info_dir, exist_ok=True)
+    with open(network_info_dir + "/conf_reseau.txt", "w") as f:
+        f.write("Adresse IP: " + ip + "\n")
+        f.write("IP du réseau: " + ip.rsplit('.', 1)[0] + ".0\n")
+        f.write("Masque du réseau: 255.255.255.0\n")
+        f.write("Gateway réseau: " + gateway_ip + "\n")
+        
 def main():
     ip = check_dhcp()
     if ip is None:
