@@ -78,7 +78,7 @@ def check_networks():
     return None
 
 def write_network_info(ip, gateway_ip):
-    network_info_dir = "/Pentest/" + main_dir + "/network_info"
+    network_info_dir = main_dir + "/network_info"
     os.makedirs(network_info_dir, exist_ok=True)
     with open(network_info_dir + "/conf_reseau.txt", "w") as f:
         f.write("Adresse IP: " + ip + "\n")
