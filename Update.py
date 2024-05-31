@@ -17,7 +17,4 @@ def hydra_update():
     os.system("sudo apt install --only-upgrade hydra")
 
 
-
-
-
-
+update_system()
