@@ -3,17 +3,17 @@ import os
 
 #MAJ de l'OS
 def update_system():
-    os.system("sudo apt-get update")
-    os.system("sudo apt-get upgrade")
+    os.system("apt-get update")
+    os.system("apt-get upgrade")
 #MAJ De nmap ainsi que sa bdd de script
 # def nmap_update():
-    os.system("sudo apt install --only-upgrade nmap")
-    os.system("sudo nmap --script-updatedb")
+    os.system("apt install --only-upgrade nmap -y")
+    os.system("nmap --script-updatedb")
 #MAJ HASHCAT
 # def hashcat_update():
-    os.system("sudo apt install --only-upgrade hashcat")
+    os.system("apt install --only-upgrade hashcat -y")
 #MAJ HYDRA
 # def hydra_update():
-    os.system("sudo apt install --only-upgrade hydra")
+    os.system("apt install --only-upgrade hydra -y")
 
 update_system()
