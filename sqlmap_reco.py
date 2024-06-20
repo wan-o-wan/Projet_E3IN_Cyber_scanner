@@ -20,7 +20,7 @@ os.makedirs(sqlmap_output_dir, exist_ok=True)
 os.makedirs(final_output_dir, exist_ok=True)
 
 for filename in os.listdir(input_dir):
-    if filename.endswith(".txt"):
+    if filename.endswith(".txt") and not filename.startswith("80"):
         ip_address = filename.replace(".txt", "")
         output_filename = "compte_rendu.txt"
 

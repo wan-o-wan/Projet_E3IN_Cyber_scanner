@@ -39,7 +39,7 @@ for filename in os.listdir(dossier):
             print("la commande c'est correctement terminer pour l'ip ", ip_address, ":\n")
         except Exception as e:
             print(f"Erreur lors de l'exécution de Wfuzz : {e}")
-
+'''
 # Define a function to remove banners from the file
 def edit_compte_rendu(report_file):
     with open(report_file, "r") as file:
@@ -54,3 +54,4 @@ def edit_compte_rendu(report_file):
 # Call the function to remove banners from "compte_rendu.txt"
 
 # edit_compte_rendu(report_file)
+'''
